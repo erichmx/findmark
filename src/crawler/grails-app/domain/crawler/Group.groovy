@@ -11,6 +11,10 @@ class Group {
     }
 
     static constraints = {
-        title nullable: false, blank: false
+        title nullable: false, blank: false, maxSize: 1024
+    }
+
+    static mapping = {
+        table 'bgroup'
     }
 }

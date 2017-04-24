@@ -14,23 +14,28 @@ services:
       MYSQL_USER: findmarkuser
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   elasticsearch:
-    image: "elasticsearch:5.3.0-alpine"
+    image: "elasticsearch:2.4.4-alpine"
     restart: always
     ports:
       - "4200:9200"
       - "4300:9300"
+    environment:
+      - network.host=0.0.0.0
+      - transport.host=0.0.0.0
+      - discovery.zen.minimum_master_nodes=1
   crawler:
     depends_on:
       - db
       - elasticsearch
     build:
-      context: ../
-      dockerfile: release/crawler/Dockerfile
+      context: ../../
+      dockerfile: release/docker/crawler/Dockerfile
     image: findmark-crawler
     ports:
       - "80:8080"
     volumes:
-      - ${PWD}/../src/crawler:/usr/local/tomcat/webapps/crawler:rw
+      - ${PWD}/../../src/crawler:/usr/local/tomcat/webapps/crawler:rw
+      - ${PWD}/../data:/data:rw
       - /gradle:/gradle
     environment:
       - BM_ENV
@@ -38,7 +43,7 @@ services:
       - DB_PORT=3306
       - DB_NAME=findmark
       - DB_USER=findmarkuser
-      - DB_PASS= ${MYSQL_PASSWORD}
+      - DB_PASS=${MYSQL_PASSWORD}
 volumes:
     db_data:
     search_data:

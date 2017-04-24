@@ -1,6 +1,7 @@
 FROM tomcat:8.5.13-jre8
 VOLUME ["/usr/local/tomcat/webapps/crawler"]
 VOLUME ["/gradle"]
+VOLUME ["/data"]
 MAINTAINER Erich von Hauske <erich@erich.mx>
 
 # Set customizable env vars defaults.
@@ -39,5 +40,5 @@ WORKDIR $CATALINA_HOME
 ENV BM_ENV DEV
 
 # Set Default Behavior
-COPY release/crawler/docker-entrypoint$BM_ENV.sh /docker-entrypoint.sh
+COPY release/docker/crawler/docker-entrypoint$BM_ENV.sh /docker-entrypoint.sh
 ENTRYPOINT ["sh","/docker-entrypoint.sh"]

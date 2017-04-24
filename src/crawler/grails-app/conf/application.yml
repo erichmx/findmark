@@ -99,6 +99,7 @@ dataSource:
 environments:
     development:
         dataSource:
+#            logSql: true
             dbCreate: update
             url: jdbc:mysql://${DB_HOST}/findmark?useUnicode=true&characterEncoding=UTF-8
     test:
@@ -130,7 +131,11 @@ environments:
 
 elasticSearch:
     datastoreImpl: hibernateDatastore
+#    disableAutoIndex: false
     client:
-        mode: local
+        mode: transport
         hosts:
-            - {host: elasticsearch, port: 9300}
+            - { host: elasticsearch, port: 9300 }
+
+crawler:
+    dataPath: /data

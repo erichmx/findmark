@@ -33,7 +33,11 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
     root(ERROR, ['STDOUT', 'FULL_STACKTRACE'])
+    logger('grails.app', DEBUG, ['STDOUT'], false)
+    logger('org.grails.plugins.elasticsearch', DEBUG, ['STDOUT'], false)
 }
 else {
     root(ERROR, ['STDOUT'])
+    logger('grails.app', DEBUG, ['STDOUT'], false)
+    logger('org.grails.plugins.elasticsearch', DEBUG, ['STDOUT'], false)
 }
