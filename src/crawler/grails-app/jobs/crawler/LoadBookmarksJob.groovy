@@ -17,7 +17,7 @@ class LoadBookmarksJob {
         log.info("Starting to load bookmarks")
 
         def dataPath = grailsApplication.config.crawler.dataPath
-        if(!dataPath) {
+        /*if(!dataPath) {
             dataPath = FileSystems.getDefault().getPath("../../../data").normalize().toAbsolutePath().toString()
         }
         log.debug("Loading html files from ${dataPath}")
@@ -31,7 +31,7 @@ class LoadBookmarksJob {
                 bookmarksService.storeBookmarks(groups)
                 log.debug("Finished loading bookmarks from ${file.name}")
             }
-        }
+        }*/
         log.info("Finished loading html files from ${dataPath}")
     }
 }

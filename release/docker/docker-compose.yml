@@ -1,6 +1,8 @@
 version: '3'
 
 services:
+  hello:
+    image: hello-world
   db:
     image: mysql:5.7
     restart: always
@@ -23,6 +25,13 @@ services:
       - network.host=0.0.0.0
       - transport.host=0.0.0.0
       - discovery.zen.minimum_master_nodes=1
+  nginx:
+        image: erichmx/findmark-nginx
+        ports:
+           - "80:80"
+        build:
+           context: ../../
+           dockerfile: release/docker/nginx/Dockerfile
   crawler:
     depends_on:
       - db
@@ -30,12 +39,12 @@ services:
     build:
       context: ../../
       dockerfile: release/docker/crawler/Dockerfile
-    image: findmark-crawler
+    image: erichmx/findmark-crawler
     ports:
-      - "80:8080"
+      - "8080:80"
     volumes:
-      - ${PWD}/../../src/crawler:/usr/local/tomcat/webapps/crawler:rw
-      - ${PWD}/../data:/data:rw
+      - /code/findmark/src/crawler:/usr/local/tomcat/webapps/crawler:rw
+      - /code/findmark/release/data:/data:rw
       - /gradle:/gradle
     environment:
       - BM_ENV
